@@ -3,6 +3,7 @@
 // tsconfig.json
 {
   "compilerOptions": {
+      "experimentalDecorators": true,
     "target": "es2018",
     "module": "esnext",
     "moduleResolution": "node",
