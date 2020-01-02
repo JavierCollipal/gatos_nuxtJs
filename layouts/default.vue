@@ -66,11 +66,13 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
+
 interface LeftMenu {
   icon: string,
   title: string,
   to: string
 }
+
 @Component
 export default class Default extends Vue {
   clipped: boolean;
@@ -81,6 +83,7 @@ export default class Default extends Vue {
   right: boolean;
   rightDrawer: boolean;
   title: string;
+
   constructor () {
     super()
     this.clipped = false
@@ -89,13 +92,8 @@ export default class Default extends Vue {
     this.items = [
       {
         icon: 'mdi-apps',
-        title: 'Welcome',
+        title: 'Hola Pela',
         to: '/'
-      },
-      {
-        icon: 'mdi-chart-bubble',
-        title: 'Inspire',
-        to: '/inspire'
       },
       {
         icon: 'mdi-chart-bubble',

@@ -12,22 +12,28 @@
   </v-app>
 </template>
 
-<script>
-export default {
-  layout: 'empty',
-  props: {
-    error: {
-      type: Object,
-      default: null
-    }
-  },
+<script lang="ts">
+import { Component, Prop, Vue } from 'vue-property-decorator'
+@Component
+export default class Error extends Vue {
+  layout!: string;
+  @Prop({ type: Object, default: null })
+  error!: any;
+
+  pageNotFound!: string;
+  otherError!: string;
+
+  constructor () {
+    super()
+    this.layout = 'emty'
+  }
 
   head () {
     const title = this.error.statusCode === 404 ? this.pageNotFound : this.otherError
     return {
       title
     }
-  },
+  }
 
   data () {
     return {
@@ -36,6 +42,7 @@ export default {
     }
   }
 }
+
 </script>
 
 <style scoped>
