@@ -37,29 +37,14 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
-      <v-btn icon @click.stop="rightDrawer = !rightDrawer">
-        <v-icon>mdi-menu</v-icon>
-      </v-btn>
     </v-app-bar>
     <v-content>
       <v-container>
         <nuxt />
       </v-container>
     </v-content>
-    <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
-      <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
-            <v-icon light>
-              mdi-repeat
-            </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer>
     <v-footer :fixed="fixed" app>
-      <span>&copy; 2019</span>
+      <span>&copy; Lanita 2020</span>
     </v-footer>
   </v-app>
 </template>
@@ -81,7 +66,6 @@ export default class Default extends Vue {
   items: LeftMenu[];
   miniVariant: boolean;
   right: boolean;
-  rightDrawer: boolean;
   title: string;
 
   constructor () {
@@ -92,18 +76,22 @@ export default class Default extends Vue {
     this.items = [
       {
         icon: 'mdi-apps',
-        title: 'Hola Pela',
+        title: 'Hola Lanita',
         to: '/'
       },
       {
         icon: 'mdi-chart-bubble',
         title: 'cats',
         to: '/cats'
+      },
+      {
+        icon: 'mdi-chart-bubble',
+        title: 'info de la app',
+        to: '/info'
       }
     ]
     this.miniVariant = false
     this.right = true
-    this.rightDrawer = false
     this.title = 'pulgas.js'
   }
 }

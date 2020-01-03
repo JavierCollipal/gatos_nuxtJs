@@ -7,7 +7,7 @@
       {{ otherError }}
     </h1>
     <NuxtLink to="/">
-      Home page
+      Inicio
     </NuxtLink>
   </v-app>
 </template>
@@ -25,20 +25,15 @@ export default class Error extends Vue {
 
   constructor () {
     super()
-    this.layout = 'emty'
+    this.layout = 'empty'
+    this.pageNotFound = 'No se encontro la pagina :('
+    this.otherError = 'La lanita se va enojar si este error no esta especificado'
   }
 
   head () {
     const title = this.error.statusCode === 404 ? this.pageNotFound : this.otherError
     return {
       title
-    }
-  }
-
-  data () {
-    return {
-      pageNotFound: '404 Not Found',
-      otherError: 'An error occurred'
     }
   }
 }

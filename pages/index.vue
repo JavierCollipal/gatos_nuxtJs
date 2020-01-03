@@ -7,10 +7,10 @@
       </div>
       <v-card>
         <v-card-title class="headline">
-          Hola lanita, en esta pagina te vamos a funarte
+          Hola lanita
         </v-card-title>
         <v-card-text>
-          <p>funaban gatas</p>
+          <p>en este index falta sacar los gif que trae nuxt y reemplazarlos con una foto de la lanita</p>
         </v-card-text>
       </v-card>
     </v-flex>

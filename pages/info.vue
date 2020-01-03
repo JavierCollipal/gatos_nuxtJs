@@ -1,6 +1,6 @@
 <template>
   <div>
-    <p>Aqui va ir un crud que funcionara con una store de vuex</p>
+    <p>Aqui va ir info relacionada sobre como funciona esta app</p>
   </div>
 </template>
 
@@ -8,6 +8,6 @@
 import { Component, Vue } from 'vue-property-decorator'
 
 @Component
-export default class Index extends Vue {
+export default class Info extends Vue {
 }
 </script>
