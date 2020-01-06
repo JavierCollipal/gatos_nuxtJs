@@ -1,2 +1,4 @@
 # gatos_nuxtJs
-frontend de mi api gatos con realizado con el framework nuxt.js, el ssr lo dejara listo para implementar con rails.
+Frontend de gatos_rails realizado con el framework nuxt.js.
+Al ser ssr, este front se encuentra arriba de manera serverless mediante google app engine.
+https://portafoliofrontend.appspot.com/
