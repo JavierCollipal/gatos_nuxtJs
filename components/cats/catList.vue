@@ -6,7 +6,7 @@
     class="elevation-1"
   >
     <template v-slot:top>
-      <v-toolbar flat color="white">
+      <v-toolbar flat>
         <v-toolbar-title>Mis Gatos</v-toolbar-title>
         <v-divider
           class="mx-4"
@@ -17,7 +17,7 @@
         <v-dialog v-model="dialog" max-width="500px">
           <template v-slot:activator="{ on }">
             <v-btn color="primary" dark class="mb-2" v-on="on">
-              New Item
+              Nuevo Gato
             </v-btn>
           </template>
           <v-card>
@@ -25,19 +25,18 @@
               <span class="headline">{{ formTitle }}</span>
             </v-card-title>
 
-            <!--AQUI VA EL UPDATE-->
-            <!--<v-card-text>
+            <v-card-text>
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
                     <v-text-field v-model="editedItem.name" label="Nombre" />
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.calories" label="Edad" />
+                    <v-text-field v-model="editedItem.age" label="Edad" />
                   </v-col>
                 </v-row>
               </v-container>
-            </v-card-text>-->
+            </v-card-text>
 
             <v-card-actions>
               <v-spacer />
@@ -56,14 +55,13 @@
     <template v-slot:item.action="{ item }">
       <v-icon
         small
-        class="mr-2"
       >
-        edit
+        mdi-pencil
       </v-icon>
       <v-icon
         small
       >
-        delete
+        mdi-delete
       </v-icon>
     </template>
   </v-data-table>
@@ -72,32 +70,43 @@
 <script lang="ts">
 
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { CatInterface } from '~/utils/interfaces/cat.interface'
+import { HeadersInterface } from '~/utils/interfaces/headers.interface'
 
 @Component
 export default class CatList extends Vue {
   @Prop({ type: Array, required: true })
-  readonly cats!: [];
+  readonly cats!: CatInterface[];
 
   formTitle: string = 'gatos';
   dialog: boolean = false;
   editedIndex: number= -1;
-  editedItem: any;
-  headers = [
-    { text: 'Nombre', value: 'name' },
-    { text: 'Edad', value: 'age' }
-  ];
+  editedItem!: CatInterface;
+  headers: HeadersInterface[];
 
-  /* editItem (item) {
+  constructor () {
+    super()
+    this.formTitle = 'gatos'
+    this.dialog = false
+    this.editedIndex = -1
+    this.editedItem = { name: '' }
+    this.headers = [
+      { text: 'Nombre', value: 'name' },
+      { text: 'Edad', value: 'age' },
+      { text: 'Actions', value: 'action', sortable: false }
+    ]
+  }
+
+  editItem (item: CatInterface) {
     this.editedIndex = this.cats.indexOf(item)
     this.editedItem = Object.assign({}, item)
     this.dialog = true
   }
 
-  deleteItem (item) {
-    /!* solucionar esto del never type *!/
-    /!* const index = this.cats.indexOf(item) *!/
-    /!* confirm('Estas seguro de borrar este gato?') && this.cats.splice(index, 1) *!/
-  } */
+  deleteItem (item: CatInterface) {
+    const index = this.cats.indexOf(item)
+    confirm('Estas seguro de borrar este gato?') && this.cats.splice(index, 1)
+  }
 
   close () {
     this.dialog = false
