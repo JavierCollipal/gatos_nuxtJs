@@ -32,7 +32,7 @@
                     <v-text-field v-model="editedItem.name" label="Nombre" />
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.age" label="Edad" />
+                    <v-text-field v-model="editedItem.age" label="Edad" type="number" />
                   </v-col>
                 </v-row>
               </v-container>
@@ -40,10 +40,12 @@
 
             <v-card-actions>
               <v-spacer />
+              <!--CANCEL-->
               <v-btn color="blue darken-1" text>
                 Cancelar
               </v-btn>
-              <v-btn color="blue darken-1" text>
+              <!--SAVE-->
+              <v-btn color="blue darken-1" text @click="save">
                 Guardar
               </v-btn>
             </v-card-actions>
@@ -55,11 +57,13 @@
     <template v-slot:item.action="{ item }">
       <v-icon
         small
+        @click="editItem(item)"
       >
         mdi-pencil
       </v-icon>
       <v-icon
         small
+        @click="deleteItem(item)"
       >
         mdi-delete
       </v-icon>
@@ -113,10 +117,11 @@ export default class CatList extends Vue {
   }
 
   save () {
+    console.log('entro aca')
     if (this.editedIndex > -1) {
       Object.assign(this.cats[this.editedIndex], this.editedItem)
     } else {
-      /* aqui va el push */
+      this.cats.push(this.editedItem)
     }
     this.close()
   }
