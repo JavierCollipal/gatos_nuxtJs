@@ -1,10 +1,9 @@
-import Vuex from 'vuex'
-import CatModule from '~/store/cat'
+import { ActionTree } from 'vuex'
+import { RootState } from '~/store/cats'
 
-export function createStore () {
-  return new Vuex.Store({
-    modules: {
-      CatModule
-    }
-  })
+export const actions: ActionTree<RootState, RootState> = {
+  async nuxtServerInit({dispatch}) {
+    await dispatch('cats/fetchCats')
+  },
 }
+
