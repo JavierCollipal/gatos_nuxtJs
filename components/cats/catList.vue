@@ -117,10 +117,10 @@ export default class CatList extends Vue {
   }
 
   save () {
-    console.log('entro aca')
     if (this.editedIndex > -1) {
       Object.assign(this.cats[this.editedIndex], this.editedItem)
     } else {
+      this.$store.dispatch('cats/addCat', this.editedItem)
       this.cats.push(this.editedItem)
     }
     this.close()

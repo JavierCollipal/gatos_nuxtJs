@@ -6,17 +6,17 @@
 
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator'
-import { getters } from '~/store/cats'
 import CatList from '~/components/cats/catList.vue'
+import { CatInterface } from '~/utils/interfaces/cat.interface'
 
 @Component({
   components: { CatList }
 })
 export default class Index extends Vue {
-  cats: [] = []
+  cats!: CatInterface[]
 
   created () {
-    this.cats = this.$store.getters['cats/getCats'] as ReturnType<typeof getters.getCats>
+    this.cats = this.$store.getters['cats/getCats'] as CatInterface[]
   }
 }
 </script>
