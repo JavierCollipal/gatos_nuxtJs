@@ -22,44 +22,19 @@
           </template>
           <v-card>
             <v-card-title>
-              <span class="headline">{{ formTitle }}</span>
+              <span class="headline"> Gatos </span>
             </v-card-title>
-
             <v-card-text>
               <v-container>
-                <ValidationObserver v-slot="{ invalid }">
-                  <form @submit.prevent="save">
-                    <v-row>
-                      <ValidationProvider v-slot="{ errors }" rules="required|alpha">
-                        <v-text-field
-                          v-model="editedItem.name"
-                          :counter="50"
-                          label="Nombre"
-                        />
-                        <span>{{ errors[0] }}</span>
-                      </ValidationProvider>
-
-                      <ValidationProvider v-slot="{ errors }" rules="required|age_between:0,20">
-                        <v-text-field
-                          v-model.number="editedItem.age"
-                          label="Edad"
-                        />
-                        <span>{{ errors[0] }}</span>
-                      </ValidationProvider>
-                    </v-row>
-
-                    <v-row>
-                      <v-btn class="mr-4">
-                        Cancelar
-                      </v-btn>
-                      <v-btn class="mr-4" type="submit" :disabled="invalid">
-                        Guardar
-                      </v-btn>
-                    </v-row>
-                  </form>
-                </ValidationObserver>
+                <CatForm />
               </v-container>
             </v-card-text>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn color="blue darken-1" text @click="close">
+                Cancel
+              </v-btn>
+            </v-card-actions>
           </v-card>
         </v-dialog>
       </v-toolbar>
@@ -88,18 +63,19 @@ import { Component, Prop, Vue } from 'nuxt-property-decorator'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { CatInterface } from '~/utils/interfaces/cat.interface'
 import { HeadersInterface } from '~/utils/interfaces/headers.interface'
+import CatForm from '~/components/cats/catForm.vue'
 
 @Component({
   components: {
     ValidationProvider,
-    ValidationObserver
+    ValidationObserver,
+    CatForm
   }
 })
 export default class CatList extends Vue {
   @Prop({ type: Array, required: true })
   readonly cats!: CatInterface[];
 
-  formTitle: string;
   dialog: boolean;
   editedIndex: number;
   editedItem!: CatInterface;
@@ -110,7 +86,6 @@ export default class CatList extends Vue {
 
   constructor () {
     super()
-    this.formTitle = 'gatos'
     this.dialog = false
     this.editedIndex = -1
     this.editedItem = { name: '' }
@@ -134,17 +109,6 @@ export default class CatList extends Vue {
 
   close () {
     this.dialog = false
-  }
-
-  save () {
-    console.log(this.$refs)
-    if (this.editedIndex > -1) {
-      Object.assign(this.cats[this.editedIndex], this.editedItem)
-    } else {
-      this.$store.dispatch('cats/addCat', this.editedItem)
-      this.cats.push(this.editedItem)
-    }
-    this.close()
   }
 }
 </script>
