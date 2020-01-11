@@ -27,28 +27,39 @@
 
             <v-card-text>
               <v-container>
-                <v-row>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.name" label="Nombre" />
-                  </v-col>
-                  <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="editedItem.age" label="Edad" type="number" />
-                  </v-col>
-                </v-row>
+                <ValidationObserver v-slot="{ invalid }">
+                  <form @submit.prevent="save">
+                    <v-row>
+                      <ValidationProvider v-slot="{ errors }" rules="required|alpha">
+                        <v-text-field
+                          v-model="editedItem.name"
+                          :counter="50"
+                          label="Nombre"
+                        />
+                        <span>{{ errors[0] }}</span>
+                      </ValidationProvider>
+
+                      <ValidationProvider v-slot="{ errors }" rules="required|age_between:0,20">
+                        <v-text-field
+                          v-model.number="editedItem.age"
+                          label="Edad"
+                        />
+                        <span>{{ errors[0] }}</span>
+                      </ValidationProvider>
+                    </v-row>
+
+                    <v-row>
+                      <v-btn class="mr-4">
+                        Cancelar
+                      </v-btn>
+                      <v-btn class="mr-4" type="submit" :disabled="invalid">
+                        Guardar
+                      </v-btn>
+                    </v-row>
+                  </form>
+                </ValidationObserver>
               </v-container>
             </v-card-text>
-
-            <v-card-actions>
-              <v-spacer />
-              <!--CANCEL-->
-              <v-btn color="blue darken-1" text>
-                Cancelar
-              </v-btn>
-              <!--SAVE-->
-              <v-btn color="blue darken-1" text @click="save">
-                Guardar
-              </v-btn>
-            </v-card-actions>
           </v-card>
         </v-dialog>
       </v-toolbar>
@@ -74,19 +85,28 @@
 <script lang="ts">
 
 import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { CatInterface } from '~/utils/interfaces/cat.interface'
 import { HeadersInterface } from '~/utils/interfaces/headers.interface'
 
-@Component
+@Component({
+  components: {
+    ValidationProvider,
+    ValidationObserver
+  }
+})
 export default class CatList extends Vue {
   @Prop({ type: Array, required: true })
   readonly cats!: CatInterface[];
 
-  formTitle: string = 'gatos';
-  dialog: boolean = false;
-  editedIndex: number= -1;
+  formTitle: string;
+  dialog: boolean;
+  editedIndex: number;
   editedItem!: CatInterface;
   headers: HeadersInterface[];
+  $refs!: {
+    observer: InstanceType<typeof ValidationObserver>;
+  };
 
   constructor () {
     super()
@@ -117,6 +137,7 @@ export default class CatList extends Vue {
   }
 
   save () {
+    console.log(this.$refs)
     if (this.editedIndex > -1) {
       Object.assign(this.cats[this.editedIndex], this.editedItem)
     } else {
