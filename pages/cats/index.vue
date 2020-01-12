@@ -14,7 +14,14 @@ const namespace: string = 'cats'
   components: { CatList }
 })
 export default class Index extends Vue {
+  snackBarColor!: string;
+
   @Getter('getCats', { namespace })
   cats!: CatInterface[]
+
+  constructor () {
+    super()
+    this.snackBarColor = 'error'
+  }
 }
 </script>

@@ -34,20 +34,23 @@
 
 <script lang="ts">
 
-import { Action, Component, Vue } from 'nuxt-property-decorator'
+import { Action, Component, Mutation, Vue } from 'nuxt-property-decorator'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { CatInterface } from '~/utils/interfaces/cat.interface'
 const namespace: string = 'cats'
 
-  @Component({
-    components: {
-      ValidationProvider,
-      ValidationObserver
-    }
-  })
+@Component({
+  components: {
+    ValidationProvider,
+    ValidationObserver
+  }
+})
 export default class CatForm extends Vue {
   @Action('addCat', { namespace })
   addCat!: Function;
+
+  @Mutation('CONTROL_FORM', { namespace })
+  controlForm!: Function;
 
   formTitle: string;
 
@@ -60,11 +63,11 @@ export default class CatForm extends Vue {
   }
 
   close () {
-    /* ACA ESTUDIAR COMO PASARLE EL FORM ITEM AL COMPONENTE PADRE */
+    this.controlForm(false)
   }
 
   save () {
-    this.addCat(this.formItem).then(() => {})
+    this.addCat(this.formItem).then(() => this.close())
   }
 }
 </script>

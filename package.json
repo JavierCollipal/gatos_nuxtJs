@@ -24,6 +24,7 @@
     "@nuxt/vue-app": "^2.11.0",
     "@nuxtjs/auth": "^4.8.5",
     "@nuxtjs/axios": "^5.9.2",
+    "@nuxtjs/toast": "^3.3.0",
     "@nuxtjs/vuetify": "^1.0.0",
     "@vue/composition-api": "^0.3.4",
     "axios": "^0.19.1",

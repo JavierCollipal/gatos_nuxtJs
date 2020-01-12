@@ -2,7 +2,8 @@ import { ActionTree, MutationTree, GetterTree } from 'vuex'
 import { CatInterface } from '~/utils/interfaces/cat.interface'
 
 export const state = () => ({
-  cats: [] as CatInterface[]
+  cats: [] as CatInterface[],
+  insertForm: false
 })
 
 export type RootState = ReturnType<typeof state>
@@ -13,14 +14,21 @@ export const actions: ActionTree<RootState, RootState> = {
     const result = await this.$axios.$get('/cats')
     commit('SET_CATS', result)
   },
+
   async addCat ({ dispatch }, cat: CatInterface) {
-    const result = await this.$axios.$post('/cats', cat).catch(() => false)
-    if (result) { dispatch('fetchCats') }
+    try {
+      await this.$axios.$post('/cats', cat)
+      this.app.$toast.success('Gato creado con exito')
+      dispatch('fetchCats')
+    } catch (e) {
+      this.app.$toast.error('Este nombre ya existe ;(')
+    }
   }
 }
 
 export const mutations: MutationTree<RootState> = {
-  SET_CATS: (state, cats: CatInterface[]) => (state.cats = cats)
+  SET_CATS: (state, cats: CatInterface[]) => (state.cats = cats),
+  CONTROL_FORM: (state, activate: boolean) => (state.insertForm = activate)
 }
 
 export const getters: GetterTree<RootState, RootState> = {

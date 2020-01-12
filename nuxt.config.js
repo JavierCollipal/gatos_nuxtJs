@@ -42,7 +42,8 @@ export default {
    ** Nuxt.js modules
    */
   modules: [
-    '@nuxtjs/axios'
+    '@nuxtjs/axios',
+    '@nuxtjs/toast'
   ],
   axios: {
     baseURL: 'http://localhost:9090',
@@ -51,6 +52,10 @@ export default {
         Accept: 'application/json'
       }
     }
+  },
+  toast: {
+    position: 'top-center',
+    duration: 2000
   },
   /*
    ** vuetify module configuration
