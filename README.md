@@ -1,2 +1,4 @@
 # gatos_nuxtJs
-frontend de mi api gatos con realizado con el framework nuxt.js, el ssr lo dejara listo para implementar con rails.
+Version actual: operaciones CRUD con Vuex y la api en rails.
+
+Proxima version: JWT entregado por rails y su implementación en gatos_nuxt.
