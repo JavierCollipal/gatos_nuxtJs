@@ -4,7 +4,7 @@
       <v-row>
         <ValidationProvider v-slot="{ errors }" rules="required">
           <v-text-field
-            v-model="formItem.name"
+            v-model="modalItem.name"
             :counter="50"
             label="Nombre"
           />
@@ -13,7 +13,7 @@
 
         <ValidationProvider v-slot="{ errors }" rules="required|age_between:0,20">
           <v-text-field
-            v-model.number="formItem.age"
+            v-model.number="modalItem.age"
             label="Edad"
           />
           <span>{{ errors[0] }}</span>
@@ -34,41 +34,41 @@
 
 <script lang="ts">
 
-import { Action, Component, Mutation, Vue } from 'nuxt-property-decorator'
+import { Action, Component, Mutation, Prop, Vue } from 'nuxt-property-decorator'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { CatInterface } from '~/utils/interfaces/cat.interface'
 
 const namespace: string = 'cats'
 
-@Component({
-  components: {
-    ValidationProvider,
-    ValidationObserver
-  }
-})
-export default class CatForm extends Vue {
-  formItem!: CatInterface;
+  @Component({
+    components: {
+      ValidationProvider,
+      ValidationObserver
+    }
+  })
+export default class CatModal extends Vue {
+    @Prop({ type: Object, required: true })
+    readonly modalItem!: CatInterface;
 
-  @Action('addCat', { namespace })
-  addCat!: Function;
+    @Action('updateCat', { namespace })
+    updateCat!: Function;
 
-  @Mutation('CONTROL_FORM', { namespace })
-  controlForm!: Function;
+    @Mutation('CONTROL_MODAL', { namespace })
+    controlModal!: Function;
 
-  formTitle: string;
+    formTitle: string;
 
-  constructor () {
-    super()
-    this.formTitle = 'gatos'
-    this.formItem = { name: '' }
-  }
+    constructor () {
+      super()
+      this.formTitle = 'Editar gato'
+    }
 
-  close () {
-    this.controlForm(false)
-  }
+    close () {
+      this.controlModal(false)
+    }
 
-  save () {
-    this.addCat(this.formItem).then(() => this.close())
-  }
+    update () {
+      this.updateCat(this.modalItem).then(() => this.close())
+    }
 }
 </script>

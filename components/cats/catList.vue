@@ -74,11 +74,17 @@ export default class CatList extends Vue {
   @State('insertForm', { namespace })
   insertForm!: boolean
 
+  @State('insertForm', { namespace })
+  updateModal!: boolean
+
   @Mutation('CONTROL_FORM', { namespace })
   controlForm!: Function;
 
+  @Mutation('CONTROL_MODAL', { namespace })
+  controlModal!: Function;
+
   editedIndex: number;
-  editedItem!: CatInterface;
+  formItem!: CatInterface;
   headers: HeadersInterface[];
   $refs!: {
     observer: InstanceType<typeof ValidationObserver>;
@@ -87,7 +93,6 @@ export default class CatList extends Vue {
   constructor () {
     super()
     this.editedIndex = -1
-    this.editedItem = { name: '' }
     this.headers = [
       { text: 'Nombre', value: 'name' },
       { text: 'Edad', value: 'age' },
@@ -97,7 +102,7 @@ export default class CatList extends Vue {
 
   editItem (item: CatInterface) {
     this.editedIndex = this.cats.indexOf(item)
-    this.editedItem = Object.assign({}, item)
+    this.formItem = Object.assign({}, item)
   }
 
   deleteItem (item: CatInterface) {
