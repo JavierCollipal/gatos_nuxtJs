@@ -48,9 +48,7 @@ export default {
   axios: {
     baseURL: 'http://localhost:9090',
     headers: {
-      common: {
-        Accept: 'application/json'
-      }
+      'Content-Type': 'application/json'
     }
   },
   toast: {

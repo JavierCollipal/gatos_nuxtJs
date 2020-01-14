@@ -28,12 +28,24 @@ export const actions: ActionTree<RootState, RootState> = {
 
   async updateCat ({ dispatch }, cat: CatInterface) {
     try {
-      await this.$axios.$put('/cats', cat)
+      const { id } = cat
+      console.log(cat)
+      delete cat.id
+      delete cat.created_at
+      delete cat.updated_at
+      await this.$axios.$put('/cats/' + id, cat)
       this.app.$toast.success('Gato actualizado con exito')
       dispatch('fetchCats')
     } catch (e) {
       this.app.$toast.error('Este nombre ya existe ;(')
     }
+  },
+
+  async deleteCat ({ dispatch }, cat: CatInterface) {
+    const { id } = cat
+    await this.$axios.$delete('/cats/' + id).catch(e => e)
+    this.app.$toast.success('Gato eliminado con exito')
+    dispatch('fetchCats')
   }
 }
 

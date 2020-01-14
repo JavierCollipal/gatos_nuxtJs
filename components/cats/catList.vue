@@ -47,24 +47,34 @@
         </v-icon>
       </template>
     </v-data-table>
+    <v-dialog v-model="updateModal" max-width="500px">
+      <v-card>
+        <v-card-text>
+          <CatModal :item="modalItem" />
+        </v-card-text>
+      </v-card>
+    </v-dialog>
   </div>
 </template>
 
 <script lang="ts">
 
-import { Component, Prop, Vue } from 'nuxt-property-decorator'
+import { Action, Component, Prop, Vue } from 'nuxt-property-decorator'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { CatInterface } from '~/utils/interfaces/cat.interface'
 import { HeadersInterface } from '~/utils/interfaces/headers.interface'
 import CatForm from '~/components/cats/catForm.vue'
+import CatModal from '~/components/cats/catModal.vue'
 import { Mutation, State } from '~/node_modules/nuxt-property-decorator'
+
 const namespace: string = 'cats'
 
 @Component({
   components: {
     ValidationProvider,
     ValidationObserver,
-    CatForm
+    CatForm,
+    CatModal
   }
 })
 export default class CatList extends Vue {
@@ -74,8 +84,11 @@ export default class CatList extends Vue {
   @State('insertForm', { namespace })
   insertForm!: boolean
 
-  @State('insertForm', { namespace })
+  @State('updateModal', { namespace })
   updateModal!: boolean
+
+  @Action('deleteCat', { namespace })
+  deleteCat!: Function
 
   @Mutation('CONTROL_FORM', { namespace })
   controlForm!: Function;
@@ -84,7 +97,7 @@ export default class CatList extends Vue {
   controlModal!: Function;
 
   editedIndex: number;
-  formItem!: CatInterface;
+  modalItem!: CatInterface;
   headers: HeadersInterface[];
   $refs!: {
     observer: InstanceType<typeof ValidationObserver>;
@@ -98,16 +111,16 @@ export default class CatList extends Vue {
       { text: 'Edad', value: 'age' },
       { text: 'Acciones', value: 'action', sortable: false }
     ]
+    this.modalItem = { name: '' }
   }
 
   editItem (item: CatInterface) {
-    this.editedIndex = this.cats.indexOf(item)
-    this.formItem = Object.assign({}, item)
+    this.modalItem = Object.assign({}, item)
+    this.controlModal(true)
   }
 
   deleteItem (item: CatInterface) {
-    const index = this.cats.indexOf(item)
-    confirm('Estas seguro de borrar este gato?') && this.cats.splice(index, 1)
+    confirm('Estas seguro de borrar este gato?') && this.deleteCat(item)
   }
 }
 </script>

@@ -1,10 +1,10 @@
 <template>
   <ValidationObserver v-slot="{ invalid }">
-    <form @submit.prevent="save">
+    <form @submit.prevent="update">
       <v-row>
         <ValidationProvider v-slot="{ errors }" rules="required">
           <v-text-field
-            v-model="modalItem.name"
+            v-model="item.name"
             :counter="50"
             label="Nombre"
           />
@@ -13,7 +13,7 @@
 
         <ValidationProvider v-slot="{ errors }" rules="required|age_between:0,20">
           <v-text-field
-            v-model.number="modalItem.age"
+            v-model.number="item.age"
             label="Edad"
           />
           <span>{{ errors[0] }}</span>
@@ -48,7 +48,7 @@ const namespace: string = 'cats'
   })
 export default class CatModal extends Vue {
     @Prop({ type: Object, required: true })
-    readonly modalItem!: CatInterface;
+    readonly item!: CatInterface;
 
     @Action('updateCat', { namespace })
     updateCat!: Function;
@@ -68,7 +68,7 @@ export default class CatModal extends Vue {
     }
 
     update () {
-      this.updateCat(this.modalItem).then(() => this.close())
+      this.updateCat(this.item).then(() => this.close())
     }
 }
 </script>
