@@ -26,15 +26,6 @@
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn icon @click.stop="miniVariant = !miniVariant">
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="clipped = !clipped">
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn icon @click.stop="fixed = !fixed">
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
       <v-toolbar-title v-text="title" />
       <v-spacer />
     </v-app-bar>
@@ -44,13 +35,13 @@
       </v-container>
     </v-content>
     <v-footer :fixed="fixed" app>
-      <span>&copy; Lanita 2020</span>
+      <span>&copy; Gatos 2020</span>
     </v-footer>
   </v-app>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Vue } from 'nuxt-property-decorator'
 
 interface LeftMenu {
   icon: string,
@@ -76,12 +67,12 @@ export default class Default extends Vue {
     this.items = [
       {
         icon: 'mdi-apps',
-        title: 'Hola Lanita',
+        title: 'Home',
         to: '/'
       },
       {
         icon: 'mdi-chart-bubble',
-        title: 'cats',
+        title: 'gatos',
         to: '/cats'
       },
       {
@@ -92,7 +83,7 @@ export default class Default extends Vue {
     ]
     this.miniVariant = false
     this.right = true
-    this.title = 'pulgas.js'
+    this.title = 'Gatos.js'
   }
 }
 </script>

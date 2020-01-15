@@ -1,13 +1,27 @@
 <template>
   <div>
-    <p>Aqui va ir un crud que funcionara con una store de vuex</p>
+    <cat-list :cats="cats" />
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
+import { Component, Getter, Vue } from 'nuxt-property-decorator'
+import CatList from '~/components/cats/catList.vue'
+import { CatInterface } from '~/utils/interfaces/cat.interface'
+const namespace: string = 'cats'
 
-@Component
+@Component({
+  components: { CatList }
+})
 export default class Index extends Vue {
+  snackBarColor!: string;
+
+  @Getter('getCats', { namespace })
+  cats!: CatInterface[]
+
+  constructor () {
+    super()
+    this.snackBarColor = 'error'
+  }
 }
 </script>

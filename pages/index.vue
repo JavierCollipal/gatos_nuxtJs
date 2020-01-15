@@ -1,16 +1,16 @@
 <template>
   <v-layout column justify-center align-center>
     <v-flex xs12 sm8 md6>
-      <div class="text-center">
-        <logo />
-        <vuetify-logo />
-      </div>
       <v-card>
         <v-card-title class="headline">
-          Hola lanita
+          Gatos
         </v-card-title>
         <v-card-text>
-          <p>en este index falta sacar los gif que trae nuxt y reemplazarlos con una foto de la lanita</p>
+          <p>Version actual: CRUD de gatos con rails, </p>
+          <p>
+            V2: Devise en el backend para manejo de la entidad users y uso de JWT entre el
+            frontend y backend
+          </p>
         </v-card-text>
       </v-card>
     </v-flex>
@@ -18,15 +18,9 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from 'vue-property-decorator'
-import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
+import { Component, Vue } from 'nuxt-property-decorator'
 
-@Component({
-  components: {
-    Logo, VuetifyLogo
-  }
-})
+@Component
 export default class Index extends Vue {
 
 }
