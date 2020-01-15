@@ -1,5 +1,11 @@
 <template>
   <div>
+    <v-card>
+      <v-card-title class="headline" />
+      <v-card-text>
+        <p>En este componente puedes crear, editar o eliminar gatos :)</p>
+      </v-card-text>
+    </v-card>
     <v-data-table
       :headers="headers"
       :items="cats"
@@ -15,7 +21,7 @@
             vertical
           />
           <v-spacer />
-          <v-dialog v-model="insertForm" persistent max-width="500px">
+          <v-dialog v-model="insertForm" persistent>
             <template v-slot:activator="{ on }">
               <v-btn color="primary" dark class="mb-2" v-on="on" @click="controlForm(true)">
                 Nuevo Gato
@@ -45,7 +51,7 @@
         </v-icon>
       </template>
     </v-data-table>
-    <v-dialog v-model="updateModal" persistent max-width="500px">
+    <v-dialog v-model="updateModal" persistent>
       <v-card>
         <v-card-text>
           <CatModal :item="modalItem" />

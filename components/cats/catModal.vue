@@ -68,7 +68,8 @@ export default class CatModal extends Vue {
     }
 
     update () {
-      this.updateCat(this.item).then(() => this.close())
+      this.close()
+      this.updateCat(this.item).then(() => {})
     }
 }
 </script>

@@ -35,7 +35,7 @@
       </v-container>
     </v-content>
     <v-footer :fixed="fixed" app>
-      <span>&copy; Lanita 2020</span>
+      <span>&copy; Gatos 2020</span>
     </v-footer>
   </v-app>
 </template>
@@ -67,12 +67,12 @@ export default class Default extends Vue {
     this.items = [
       {
         icon: 'mdi-apps',
-        title: 'Hola Lanita',
+        title: 'Home',
         to: '/'
       },
       {
         icon: 'mdi-chart-bubble',
-        title: 'cats',
+        title: 'gatos',
         to: '/cats'
       },
       {
@@ -83,7 +83,7 @@ export default class Default extends Vue {
     ]
     this.miniVariant = false
     this.right = true
-    this.title = 'pulgas.js'
+    this.title = 'Gatos.js'
   }
 }
 </script>

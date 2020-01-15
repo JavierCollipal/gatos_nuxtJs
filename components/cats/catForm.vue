@@ -68,7 +68,8 @@ export default class CatForm extends Vue {
   }
 
   save () {
-    this.addCat(this.formItem).then(() => this.close())
+    this.close()
+    this.addCat(this.formItem).then(() => {})
   }
 }
 </script>
