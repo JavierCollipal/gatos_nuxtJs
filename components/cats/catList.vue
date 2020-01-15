@@ -15,7 +15,7 @@
             vertical
           />
           <v-spacer />
-          <v-dialog v-model="insertForm" max-width="500px">
+          <v-dialog v-model="insertForm" persistent max-width="500px">
             <template v-slot:activator="{ on }">
               <v-btn color="primary" dark class="mb-2" v-on="on" @click="controlForm(true)">
                 Nuevo Gato
@@ -34,20 +34,18 @@
 
       <template v-slot:item.action="{ item }">
         <v-icon
-          small
           @click="editItem(item)"
         >
           mdi-pencil
         </v-icon>
         <v-icon
-          small
           @click="deleteItem(item)"
         >
           mdi-delete
         </v-icon>
       </template>
     </v-data-table>
-    <v-dialog v-model="updateModal" max-width="500px">
+    <v-dialog v-model="updateModal" persistent max-width="500px">
       <v-card>
         <v-card-text>
           <CatModal :item="modalItem" />

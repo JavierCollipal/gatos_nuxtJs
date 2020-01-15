@@ -5,10 +5,10 @@
   "author": "JavierCollipal",
   "private": true,
   "scripts": {
-    "dev": "nuxt",
-    "build": "nuxt build",
-    "start": "nuxt start",
-    "generate": "nuxt generate",
+    "dev": "nuxt-ts",
+    "build": "nuxt-ts build",
+    "start": "nuxt-ts start",
+    "generate": "nuxt-ts generate",
     "lint": "eslint --ext .ts,.js,.vue .",
     "test": "jest"
   },
@@ -21,7 +21,7 @@
     }
   },
   "dependencies": {
-    "@nuxt/vue-app": "^2.11.0",
+    "@nuxt/typescript-runtime": "^0.3.7",
     "@nuxtjs/auth": "^4.8.5",
     "@nuxtjs/axios": "^5.9.2",
     "@nuxtjs/toast": "^3.3.0",

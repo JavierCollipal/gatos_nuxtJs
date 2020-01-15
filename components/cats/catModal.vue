@@ -21,7 +21,7 @@
       </v-row>
 
       <v-row>
-        <v-btn class="mr-4">
+        <v-btn class="mr-4" @click="controlModal(false)">
           Cancelar
         </v-btn>
         <v-btn class="mr-4" type="submit" :disabled="invalid">
