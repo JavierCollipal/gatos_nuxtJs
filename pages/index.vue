@@ -3,13 +3,24 @@
     <v-flex xs12 sm8 md6>
       <v-card>
         <v-card-title class="headline">
-          Gatos
+          Versiones
         </v-card-title>
         <v-card-text>
-          <p>Version actual: CRUD de gatos con rails, </p>
+          <p>Version actual: CRUD publico de gatos con rails. </p>
           <p>
-            V2: Devise en el backend para manejo de la entidad users y uso de JWT entre el
-            frontend y backend
+            V1: CRUD de gatos con rails.
+          </p>
+          <p>
+            V2: Color y Raza para gatos y un mantenedor de estas tablas.
+            Su fin es exponer que la api trabaja con relaciones one-to-one.
+          </p>
+          <p>
+            V3: Devise de rails para manejar la entidad usuario y JWT
+            para limitar acciones entre frontend/backend.
+          </p>
+          <p>
+            V4: Registrate y crea TUS gatos!!.
+            Su fin es exponer que la api trabaja con relaciones one-to-many.
           </p>
         </v-card-text>
       </v-card>
