@@ -3,8 +3,8 @@ import { CatInterface } from '~/utils/interfaces/cat.interface'
 
 export const state = () => ({
   cats: [] as CatInterface[],
-  insertForm: false,
-  updateModal: false
+  cat: {} as CatInterface,
+  catForm: false
 })
 
 export type RootState = ReturnType<typeof state>
@@ -51,10 +51,11 @@ export const actions: ActionTree<RootState, RootState> = {
 
 export const mutations: MutationTree<RootState> = {
   SET_CATS: (state, cats: CatInterface[]) => (state.cats = cats),
-  CONTROL_FORM: (state, activate: boolean) => (state.insertForm = activate),
-  CONTROL_MODAL: (state, activate: boolean) => (state.updateModal = activate)
+  SET_CAT: (state, cat: CatInterface) => (state.cat = cat),
+  CONTROL_FORM: (state, activate: boolean) => (state.catForm = activate)
 }
 
 export const getters: GetterTree<RootState, RootState> = {
-  getCats: state => state.cats
+  getCats: state => state.cats,
+  getCat: state => state.cat
 }

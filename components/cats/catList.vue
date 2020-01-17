@@ -1,11 +1,5 @@
 <template>
   <div>
-    <v-card>
-      <v-card-title class="headline" />
-      <v-card-text>
-        <p>En este componente puedes crear, editar o eliminar gatos :)</p>
-      </v-card-text>
-    </v-card>
     <v-data-table
       :headers="headers"
       :items="cats"
@@ -21,20 +15,9 @@
             vertical
           />
           <v-spacer />
-          <v-dialog v-model="insertForm" persistent>
-            <template v-slot:activator="{ on }">
-              <v-btn color="primary" dark class="mb-2" v-on="on" @click="controlForm(true)">
-                Nuevo Gato
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-text>
-                <v-container>
-                  <CatForm />
-                </v-container>
-              </v-card-text>
-            </v-card>
-          </v-dialog>
+          <v-btn color="primary" dark class="mb-2" @click.stop="addItem()">
+            Nuevo Gato
+          </v-btn>
         </v-toolbar>
       </template>
 
@@ -51,10 +34,12 @@
         </v-icon>
       </template>
     </v-data-table>
-    <v-dialog v-model="updateModal" persistent>
+    <v-dialog v-model="catForm" persistent max-width="500px">
       <v-card>
         <v-card-text>
-          <CatModal :item="modalItem" />
+          <v-container>
+            <CatForm :cat="cat" :is-update="isUpdate" />
+          </v-container>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -68,7 +53,6 @@ import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { CatInterface } from '~/utils/interfaces/cat.interface'
 import { HeadersInterface } from '~/utils/interfaces/headers.interface'
 import CatForm from '~/components/cats/catForm.vue'
-import CatModal from '~/components/cats/catModal.vue'
 import { Mutation, State } from '~/node_modules/nuxt-property-decorator'
 
 const namespace: string = 'cats'
@@ -77,19 +61,18 @@ const namespace: string = 'cats'
   components: {
     ValidationProvider,
     ValidationObserver,
-    CatForm,
-    CatModal
+    CatForm
   }
 })
 export default class CatList extends Vue {
   @Prop({ type: Array, required: true })
   readonly cats!: CatInterface[];
 
-  @State('insertForm', { namespace })
-  insertForm!: boolean
+  @State('catForm', { namespace })
+  catForm!: boolean
 
-  @State('updateModal', { namespace })
-  updateModal!: boolean
+  @State('cat', { namespace })
+  cat!: CatInterface
 
   @Action('deleteCat', { namespace })
   deleteCat!: Function
@@ -97,15 +80,16 @@ export default class CatList extends Vue {
   @Mutation('CONTROL_FORM', { namespace })
   controlForm!: Function;
 
-  @Mutation('CONTROL_MODAL', { namespace })
-  controlModal!: Function;
+  @Mutation('SET_CAT', { namespace })
+  setCat!: Function;
 
   editedIndex: number;
-  modalItem!: CatInterface;
   headers: HeadersInterface[];
   $refs!: {
     observer: InstanceType<typeof ValidationObserver>;
   };
+
+  isUpdate!: boolean
 
   constructor () {
     super()
@@ -115,12 +99,19 @@ export default class CatList extends Vue {
       { text: 'Edad', value: 'age' },
       { text: 'Acciones', value: 'action', sortable: false }
     ]
-    this.modalItem = { name: '' }
+    this.isUpdate = false
+  }
+
+  addItem () {
+    this.setCat({})
+    this.isUpdate = false
+    this.controlForm(true)
   }
 
   editItem (item: CatInterface) {
-    this.modalItem = Object.assign({}, item)
-    this.controlModal(true)
+    this.setCat(item)
+    this.isUpdate = true
+    this.controlForm(true)
   }
 
   deleteItem (item: CatInterface) {

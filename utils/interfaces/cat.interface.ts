@@ -1,6 +1,6 @@
 export interface CatInterface {
   id?: number,
-  name: string,
+  name?: string,
   age?: number,
   // eslint-disable-next-line camelcase
   created_at?: string,
