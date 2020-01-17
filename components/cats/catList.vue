@@ -50,8 +50,8 @@
 
 import { Action, Component, Prop, Vue } from 'nuxt-property-decorator'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
-import { CatInterface } from '~/utils/interfaces/cat.interface'
-import { HeadersInterface } from '~/utils/interfaces/headers.interface'
+import { CatInterface } from '~/interfaces/cat.interface'
+import { HeadersInterface } from '~/interfaces/headers.interface'
 import CatForm from '~/components/cats/catForm.vue'
 import { Mutation, State } from '~/node_modules/nuxt-property-decorator'
 

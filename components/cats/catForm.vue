@@ -36,7 +36,7 @@
 
 import { Action, Component, Mutation, Prop, Vue } from 'nuxt-property-decorator'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
-import { CatInterface } from '~/utils/interfaces/cat.interface'
+import { CatInterface } from '~/interfaces/cat.interface'
 
 const namespace: string = 'cats'
 

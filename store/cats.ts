@@ -1,6 +1,7 @@
 import { ActionTree, MutationTree, GetterTree } from 'vuex'
-import { CatInterface } from '~/utils/interfaces/cat.interface'
+import { CatInterface } from '~/interfaces/cat.interface'
 
+const catRoute = '/cats/'
 export const state = () => ({
   cats: [] as CatInterface[],
   cat: {} as CatInterface,
@@ -12,13 +13,13 @@ export type RootState = ReturnType<typeof state>
 export const actions: ActionTree<RootState, RootState> = {
 
   async fetchCats ({ commit }) {
-    const result = await this.$axios.$get('/cats')
+    const result = await this.$axios.$get(catRoute)
     commit('SET_CATS', result)
   },
 
   async addCat ({ dispatch }, cat: CatInterface) {
     try {
-      await this.$axios.$post('/cats', cat)
+      await this.$axios.$post(catRoute, cat)
       this.app.$toast.success('Gato creado con exito')
       dispatch('fetchCats')
     } catch (e) {
@@ -29,11 +30,8 @@ export const actions: ActionTree<RootState, RootState> = {
   async updateCat ({ dispatch }, cat: CatInterface) {
     try {
       const { id } = cat
-      console.log(cat)
       delete cat.id
-      delete cat.created_at
-      delete cat.updated_at
-      await this.$axios.$put('/cats/' + id, cat)
+      await this.$axios.$put(catRoute + id, cat)
       this.app.$toast.success('Gato actualizado con exito')
       dispatch('fetchCats')
     } catch (e) {
@@ -43,7 +41,7 @@ export const actions: ActionTree<RootState, RootState> = {
 
   async deleteCat ({ dispatch }, cat: CatInterface) {
     const { id } = cat
-    await this.$axios.$delete('/cats/' + id).catch(e => e)
+    await this.$axios.$delete(catRoute + id).catch(e => e)
     this.app.$toast.success('Gato eliminado con exito')
     dispatch('fetchCats')
   }
