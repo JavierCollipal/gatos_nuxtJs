@@ -30,7 +30,7 @@ import { Action, Component, Mutation, Vue } from 'nuxt-property-decorator'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { BreedInterface } from '~/interfaces/breed.interface'
 
-const namespace: string = 'catProperties'
+const namespace: string = 'cats'
 
 @Component({
   components: {
@@ -52,6 +52,7 @@ export default class BreedForm extends Vue {
     constructor () {
       super()
       this.formTitle = 'Razas'
+      this.breed = { name: '' }
     }
 
     close () {

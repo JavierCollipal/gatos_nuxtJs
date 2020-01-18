@@ -77,6 +77,11 @@ export default class Default extends Vue {
       },
       {
         icon: 'mdi-chart-bubble',
+        title: 'caracteristicas!',
+        to: '/maintainers'
+      },
+      {
+        icon: 'mdi-chart-bubble',
         title: 'info de la app',
         to: '/info'
       }

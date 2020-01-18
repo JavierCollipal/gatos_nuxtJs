@@ -5,7 +5,7 @@ export const actions = {
   // @ts-ignore
   async nuxtServerInit ({ dispatch }) {
     await dispatch('cats/fetchCats')
-    await dispatch('properties/fetchBreeds')
-    await dispatch('properties/fetchColors')
+    await dispatch('cats/fetchBreeds')
+    await dispatch('cats/fetchColors')
   }
 }

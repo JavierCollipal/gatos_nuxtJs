@@ -49,7 +49,6 @@
 <script lang="ts">
 
 import { Action, Component, Prop, Vue } from 'nuxt-property-decorator'
-import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { CatInterface } from '~/interfaces/cat.interface'
 import { HeadersInterface } from '~/interfaces/headers.interface'
 import CatForm from '~/components/cats/catForm.vue'
@@ -59,8 +58,6 @@ const namespace: string = 'cats'
 
 @Component({
   components: {
-    ValidationProvider,
-    ValidationObserver,
     CatForm
   }
 })
@@ -85,9 +82,6 @@ export default class CatList extends Vue {
 
   editedIndex: number;
   headers: HeadersInterface[];
-  $refs!: {
-    observer: InstanceType<typeof ValidationObserver>;
-  };
 
   isUpdate!: boolean
 

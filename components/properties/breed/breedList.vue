@@ -8,7 +8,7 @@
     >
       <template v-slot:top>
         <v-toolbar flat>
-          <v-toolbar-title>Mis Gatos</v-toolbar-title>
+          <v-toolbar-title>Razas</v-toolbar-title>
           <v-divider
             class="mx-4"
             inset
@@ -16,17 +16,12 @@
           />
           <v-spacer />
           <v-btn color="primary" dark class="mb-2" @click.stop="addItem()">
-            Nuevo Gato
+            Nueva Raza
           </v-btn>
         </v-toolbar>
       </template>
 
       <template v-slot:item.action="{ item }">
-        <v-icon
-          @click="editItem(item)"
-        >
-          mdi-pencil
-        </v-icon>
         <v-icon
           @click="deleteItem(item)"
         >
@@ -55,7 +50,7 @@ import BreedForm from '~/components/properties/breed/breedForm.vue'
 import { Mutation, State } from '~/node_modules/nuxt-property-decorator'
 import { BreedInterface } from '~/interfaces/breed.interface'
 
-const namespace: string = 'catProperties'
+const namespace: string = 'cats'
 
 @Component({
   components: {
@@ -96,7 +91,7 @@ export default class BreedList extends Vue {
     }
 
     deleteItem (item: BreedInterface) {
-      confirm('Estas seguro de borrar este gato?') && this.deleteBreed(item)
+      confirm('Estas seguro de borrar esta raza?') && this.deleteBreed(item)
     }
 }
 </script>

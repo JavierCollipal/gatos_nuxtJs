@@ -19,6 +19,10 @@
           <span>{{ errors[0] }}</span>
         </ValidationProvider>
       </v-row>
+      <v-row>
+        <BreedSelect />
+        <ColorSelect />
+      </v-row>
 
       <v-row>
         <v-btn class="mr-4" @click="controlForm(false)">
@@ -34,16 +38,20 @@
 
 <script lang="ts">
 
-import { Action, Component, Mutation, Prop, Vue } from 'nuxt-property-decorator'
+import { Action, Component, Getter, Mutation, Prop, Vue } from 'nuxt-property-decorator'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { CatInterface } from '~/interfaces/cat.interface'
+import BreedSelect from '~/components/properties/breed/breedSelect.vue'
+import ColorSelect from '~/components/properties/color/colorSelect.vue'
 
 const namespace: string = 'cats'
 
 @Component({
   components: {
     ValidationProvider,
-    ValidationObserver
+    ValidationObserver,
+    BreedSelect,
+    ColorSelect
   }
 })
 export default class CatForm extends Vue {
@@ -62,8 +70,8 @@ export default class CatForm extends Vue {
   @Mutation('CONTROL_FORM', { namespace })
   controlForm!: Function;
 
-  @Mutation('SET_CAT', { namespace })
-  setCat!: Function;
+  @Getter('getCat', { namespace })
+  getCat!: Function;
 
   formTitle: string;
 
@@ -77,10 +85,12 @@ export default class CatForm extends Vue {
   }
 
   save () {
+    // breed and color select use the cat state for id insert/update
+    const cat = Object.assign(this.getCat, this.cat)
     if (this.isUpdate) {
-      this.updateCat(this.cat).then(() => {})
+      this.updateCat(cat).then(() => {})
     } else {
-      this.addCat(this.cat).then(() => {})
+      this.addCat(cat).then(() => {})
     }
     this.close()
   }
