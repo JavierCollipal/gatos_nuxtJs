@@ -19,10 +19,12 @@
           <span>{{ errors[0] }}</span>
         </ValidationProvider>
       </v-row>
-      <v-row>
-        <BreedSelect />
-        <ColorSelect />
-      </v-row>
+      <validation-observer>
+        <v-row>
+          <BreedSelect />
+          <ColorSelect />
+        </v-row>
+      </validation-observer>
 
       <v-row>
         <v-btn class="mr-4" @click="controlForm(false)">

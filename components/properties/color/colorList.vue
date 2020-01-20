@@ -23,10 +23,24 @@
 
       <template v-slot:item.action="{ item }">
         <v-icon
-          @click="deleteItem(item)"
+          @click="deleteModal = true"
         >
           mdi-delete
         </v-icon>
+        <v-dialog v-model="deleteModal" persistent max-width="500px">
+          <v-card>
+            <v-card-title class="headline">¿Estas seguro de borrar este color?</v-card-title>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn text @click="deleteModal = false">
+                Cancelar
+              </v-btn>
+              <v-btn text @click="deleteItem(item)">
+                Borrar
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </template>
     </v-data-table>
     <v-dialog v-model="colorForm" persistent max-width="500px">
@@ -71,12 +85,15 @@ export default class ColorList extends Vue {
 
     headers: HeadersInterface[];
 
+    deleteModal!: boolean;
+
     constructor () {
       super()
       this.headers = [
         { text: 'Nombre', value: 'name' },
         { text: 'Acciones', value: 'action', sortable: false }
       ]
+      this.deleteModal = false
     }
 
     addItem () {
@@ -84,7 +101,8 @@ export default class ColorList extends Vue {
     }
 
     deleteItem (item: ColorInterface) {
-      confirm('Estas seguro de borrar este color?') && this.deleteColor(item)
+      this.deleteModal = false
+      this.deleteColor(item)
     }
 }
 </script>

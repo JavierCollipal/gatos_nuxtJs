@@ -1,19 +1,25 @@
 <template>
-  <v-select
-    v-model="selected"
-    :items="names"
-    label="Razas"
-    @change="onSelect"
-  />
+  <ValidationProvider v-slot="{ errors }" rules="required">
+    <v-select
+      v-model="display"
+      :items="names"
+      label="Razas"
+      @change="onSelect"
+    />
+    <span>{{ errors[0] }}</span>
+  </ValidationProvider>
 </template>
 
 <script lang="ts">
 
 import { Action, Component, Getter, Mutation, Vue } from 'nuxt-property-decorator'
+import { ValidationObserver, ValidationProvider } from '~/node_modules/vee-validate'
 
 const namespace: string = 'cats'
 
-@Component
+@Component({
+  components: { ValidationObserver, ValidationProvider }
+})
 export default class BreedSelect extends Vue {
     @Getter('getBreedNames', { namespace })
     names!: string[]
@@ -27,11 +33,13 @@ export default class BreedSelect extends Vue {
     @Getter('filterBreed', { namespace })
     filterBreed!: Function
 
+    display!: string
     selected!: string
 
     constructor () {
       super()
       this.selected = ''
+      this.display = ''
     }
 
     created () {
@@ -39,8 +47,10 @@ export default class BreedSelect extends Vue {
     }
 
     onSelect () {
+      this.selected = this.display
       const { id } = this.filterBreed(this.selected)
       this.setBreed(id)
+      this.selected = ''
     }
 }
 </script>

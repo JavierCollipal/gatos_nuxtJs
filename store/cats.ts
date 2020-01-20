@@ -76,15 +76,19 @@ export const actions: ActionTree<RootState, RootState> = {
   },
 
   async deleteBreed ({ dispatch }, breed: BreedInterface) {
-    const { id } = breed
-    await this.$axios.$delete(breedRoute + id).catch(e => e)
-    this.app.$toast.success('Raza eliminado con exito')
-    dispatch('fetchBreeds')
+    try {
+      const { id } = breed
+      await this.$axios.$delete(breedRoute + id).catch(e => e)
+      this.app.$toast.success('Raza eliminado con exito')
+      dispatch('fetchBreeds')
+    } catch (e) {
+      this.app.$toast.error('Esta raza esta en uso :(')
+    }
   },
 
   async addColor ({ dispatch }, color: ColorInterface) {
     try {
-      await this.$axios.$post(breedRoute, color)
+      await this.$axios.$post(colorRoute, color)
       this.app.$toast.success('Color creado con exito')
       dispatch('fetchColors')
     } catch (e) {
@@ -94,9 +98,13 @@ export const actions: ActionTree<RootState, RootState> = {
 
   async deleteColor ({ dispatch }, color: ColorInterface) {
     const { id } = color
-    await this.$axios.$delete(breedRoute + id).catch(e => e)
-    this.app.$toast.success('Color eliminado con exito')
-    dispatch('fetchColors')
+    try {
+      await this.$axios.$delete(colorRoute + id)
+      this.app.$toast.success('Color eliminado con exito')
+      dispatch('fetchColors')
+    } catch (e) {
+      this.app.$toast.error('Este color esta en uso :(')
+    }
   }
 }
 
