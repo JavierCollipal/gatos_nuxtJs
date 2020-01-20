@@ -6,7 +6,7 @@
           Versiones
         </v-card-title>
         <v-card-text>
-          <p>Version actual: CRUD publico de gatos con rails. </p>
+          <p>Version actual: V2. </p>
           <p>
             V1: CRUD de gatos con rails.
           </p>
