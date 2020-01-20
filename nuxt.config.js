@@ -46,9 +46,9 @@ export default {
     '@nuxtjs/toast'
   ],
   axios: {
-    /* 'https://portafoliobackend.appspot.com' */
+    /*  */
 
-    baseURL: 'http://localhost:9090',
+    baseURL: 'https://portafoliobackend.appspot.com',
     headers: {
       'Content-Type': 'application/json'
     }
