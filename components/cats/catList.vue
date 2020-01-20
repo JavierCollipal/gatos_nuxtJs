@@ -1,11 +1,5 @@
 <template>
   <div>
-    <v-card>
-      <v-card-title class="headline" />
-      <v-card-text>
-        <p>En este componente puedes crear, editar o eliminar gatos :)</p>
-      </v-card-text>
-    </v-card>
     <v-data-table
       :headers="headers"
       :items="cats"
@@ -21,23 +15,11 @@
             vertical
           />
           <v-spacer />
-          <v-dialog v-model="insertForm" persistent>
-            <template v-slot:activator="{ on }">
-              <v-btn color="primary" dark class="mb-2" v-on="on" @click="controlForm(true)">
-                Nuevo Gato
-              </v-btn>
-            </template>
-            <v-card>
-              <v-card-text>
-                <v-container>
-                  <CatForm />
-                </v-container>
-              </v-card-text>
-            </v-card>
-          </v-dialog>
+          <v-btn color="primary" dark class="mb-2" @click.stop="addItem()">
+            Nuevo Gato
+          </v-btn>
         </v-toolbar>
       </template>
-
       <template v-slot:item.action="{ item }">
         <v-icon
           @click="editItem(item)"
@@ -45,16 +27,34 @@
           mdi-pencil
         </v-icon>
         <v-icon
-          @click="deleteItem(item)"
+          @click="deleteModal = true"
         >
           mdi-delete
         </v-icon>
+        <v-dialog v-model="deleteModal" persistent max-width="500px">
+          <v-card>
+            <v-card-title class="headline">
+              ¿Estas seguro de borrar este gato?
+            </v-card-title>
+            <v-card-actions>
+              <v-spacer />
+              <v-btn text @click="deleteModal = false">
+                Cancelar
+              </v-btn>
+              <v-btn text @click="deleteItem(item)">
+                Borrar
+              </v-btn>
+            </v-card-actions>
+          </v-card>
+        </v-dialog>
       </template>
     </v-data-table>
-    <v-dialog v-model="updateModal" persistent>
+    <v-dialog v-model="catForm" persistent max-width="500px">
       <v-card>
         <v-card-text>
-          <CatModal :item="modalItem" />
+          <v-container>
+            <CatForm :cat="cat" :is-update="isUpdate" />
+          </v-container>
         </v-card-text>
       </v-card>
     </v-dialog>
@@ -64,32 +64,27 @@
 <script lang="ts">
 
 import { Action, Component, Prop, Vue } from 'nuxt-property-decorator'
-import { ValidationProvider, ValidationObserver } from 'vee-validate'
-import { CatInterface } from '~/utils/interfaces/cat.interface'
-import { HeadersInterface } from '~/utils/interfaces/headers.interface'
+import { CatInterface } from '~/interfaces/cat.interface'
+import { HeadersInterface } from '~/interfaces/headers.interface'
 import CatForm from '~/components/cats/catForm.vue'
-import CatModal from '~/components/cats/catModal.vue'
 import { Mutation, State } from '~/node_modules/nuxt-property-decorator'
 
 const namespace: string = 'cats'
 
 @Component({
   components: {
-    ValidationProvider,
-    ValidationObserver,
-    CatForm,
-    CatModal
+    CatForm
   }
 })
 export default class CatList extends Vue {
   @Prop({ type: Array, required: true })
   readonly cats!: CatInterface[];
 
-  @State('insertForm', { namespace })
-  insertForm!: boolean
+  @State('catForm', { namespace })
+  catForm!: boolean
 
-  @State('updateModal', { namespace })
-  updateModal!: boolean
+  @State('cat', { namespace })
+  cat!: CatInterface
 
   @Action('deleteCat', { namespace })
   deleteCat!: Function
@@ -97,15 +92,15 @@ export default class CatList extends Vue {
   @Mutation('CONTROL_FORM', { namespace })
   controlForm!: Function;
 
-  @Mutation('CONTROL_MODAL', { namespace })
-  controlModal!: Function;
+  @Mutation('SET_CAT', { namespace })
+  setCat!: Function;
 
   editedIndex: number;
-  modalItem!: CatInterface;
   headers: HeadersInterface[];
-  $refs!: {
-    observer: InstanceType<typeof ValidationObserver>;
-  };
+
+  isUpdate!: boolean;
+
+  deleteModal!: boolean;
 
   constructor () {
     super()
@@ -113,18 +108,29 @@ export default class CatList extends Vue {
     this.headers = [
       { text: 'Nombre', value: 'name' },
       { text: 'Edad', value: 'age' },
+      { text: 'Color', value: 'color.name' },
+      { text: 'Raza', value: 'breed.name' },
       { text: 'Acciones', value: 'action', sortable: false }
     ]
-    this.modalItem = { name: '' }
+    this.isUpdate = false
+    this.deleteModal = false
+  }
+
+  addItem () {
+    this.setCat({})
+    this.isUpdate = false
+    this.controlForm(true)
   }
 
   editItem (item: CatInterface) {
-    this.modalItem = Object.assign({}, item)
-    this.controlModal(true)
+    this.setCat(item)
+    this.isUpdate = true
+    this.controlForm(true)
   }
 
   deleteItem (item: CatInterface) {
-    confirm('Estas seguro de borrar este gato?') && this.deleteCat(item)
+    this.deleteModal = false
+    this.deleteCat(item)
   }
 }
 </script>

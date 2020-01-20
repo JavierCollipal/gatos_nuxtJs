@@ -7,21 +7,14 @@
 <script lang="ts">
 import { Component, Getter, Vue } from 'nuxt-property-decorator'
 import CatList from '~/components/cats/catList.vue'
-import { CatInterface } from '~/utils/interfaces/cat.interface'
+import { CatInterface } from '~/interfaces/cat.interface'
 const namespace: string = 'cats'
 
 @Component({
   components: { CatList }
 })
 export default class Index extends Vue {
-  snackBarColor!: string;
-
   @Getter('getCats', { namespace })
   cats!: CatInterface[]
-
-  constructor () {
-    super()
-    this.snackBarColor = 'error'
-  }
 }
 </script>
