@@ -1,10 +1,11 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="6">
+      <v-col>
         <breed-list :breeds="breeds" />
       </v-col>
-      <v-col cols="6">
+
+      <v-col>
         <color-list :colors="colors" />
       </v-col>
     </v-row>
