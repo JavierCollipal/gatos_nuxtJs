@@ -1,7 +1,7 @@
 <template>
   <v-layout column justify-center align-center>
     <v-flex xs12 sm8 md6>
-      <v-card>
+      <v-card light>
         <v-card-title class="headline">
           Versiones
         </v-card-title>

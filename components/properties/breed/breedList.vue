@@ -5,6 +5,7 @@
       :items="breeds"
       sort-by="id"
       class="elevation-1"
+      light
     >
       <template v-slot:top>
         <v-toolbar flat>

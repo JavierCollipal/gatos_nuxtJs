@@ -1,10 +1,10 @@
 <template>
   <ValidationProvider v-slot="{ errors }" rules="required">
     <v-select
-      v-model="display"
+      v-model="selected"
       :items="names"
       label="Razas"
-      @change="onSelect"
+      @input="onSelect"
     />
     <span>{{ errors[0] }}</span>
   </ValidationProvider>
@@ -12,7 +12,7 @@
 
 <script lang="ts">
 
-import { Action, Component, Getter, Mutation, Vue } from 'nuxt-property-decorator'
+import { Action, Component, Getter, Mutation, Prop, Vue, Watch } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider } from '~/node_modules/vee-validate'
 
 const namespace: string = 'cats'
@@ -33,13 +33,14 @@ export default class BreedSelect extends Vue {
     @Getter('filterBreed', { namespace })
     filterBreed!: Function
 
-    display!: string
-    selected!: string
+    @Prop({ type: Boolean, required: true })
+    reset!: boolean
+
+    selected: string
 
     constructor () {
       super()
       this.selected = ''
-      this.display = ''
     }
 
     created () {
@@ -47,9 +48,12 @@ export default class BreedSelect extends Vue {
     }
 
     onSelect () {
-      this.selected = this.display
       const { id } = this.filterBreed(this.selected)
       this.setBreed(id)
+    }
+
+    @Watch('reset')
+    onReset () {
       this.selected = ''
     }
 }

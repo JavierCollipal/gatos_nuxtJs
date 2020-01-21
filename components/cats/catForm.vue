@@ -26,16 +26,16 @@
       <validation-observer>
         <v-row>
           <v-col cols="6">
-            <BreedSelect />
+            <BreedSelect :reset="resetSelects" />
           </v-col>
           <v-col cols="6">
-            <ColorSelect />
+            <ColorSelect :reset="resetSelects" />
           </v-col>
         </v-row>
       </validation-observer>
 
       <v-row>
-        <v-btn class="mr-4" @click="controlForm(false)">
+        <v-btn class="mr-4" @click="close">
           Cancelar
         </v-btn>
         <v-btn class="mr-4" type="submit" :disabled="invalid">
@@ -84,14 +84,30 @@ export default class CatForm extends Vue {
   getCat!: Function;
 
   formTitle: string;
+  resetSelects!: boolean;
 
   constructor () {
     super()
     this.formTitle = 'gatos'
+    this.resetSelects = false
+  }
+
+  resetSelectValues () : Promise<any> {
+    return new Promise((resolve) => {
+      this.resetSelects = true
+      this.controlForm(false)
+      resolve()
+    })
   }
 
   close () {
-    this.controlForm(false)
+    this.resetSelectValues().then(() => {
+      this.resetSelects = false
+    })
+  }
+
+  test () {
+    this.resetSelects = false
   }
 
   save () {

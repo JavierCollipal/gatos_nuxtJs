@@ -14,6 +14,7 @@
 
 import { Action, Component, Getter, Mutation, Vue } from 'nuxt-property-decorator'
 import { ValidationObserver, ValidationProvider } from '~/node_modules/vee-validate'
+import { Prop, Watch } from '~/node_modules/nuxt-property-decorator'
 const namespace: string = 'cats'
 
 @Component({
@@ -32,6 +33,9 @@ export default class ColorSelect extends Vue {
     @Getter('filterColor', { namespace })
     filterColor!: Function
 
+    @Prop({ type: Boolean, required: true })
+    reset!: boolean
+
     selected!: string
 
     constructor () {
@@ -41,6 +45,11 @@ export default class ColorSelect extends Vue {
 
     created () {
       this.fetchColors()
+    }
+
+    @Watch('reset')
+    onReset () {
+      this.selected = ''
     }
 
     onSelect () {

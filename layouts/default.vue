@@ -42,12 +42,7 @@
 
 <script lang="ts">
 import { Component, Vue } from 'nuxt-property-decorator'
-
-interface LeftMenu {
-  icon: string,
-  title: string,
-  to: string
-}
+import { LeftMenu } from '~/interfaces/leftMenu.interface'
 
 @Component
 export default class Default extends Vue {
@@ -88,7 +83,7 @@ export default class Default extends Vue {
     ]
     this.miniVariant = false
     this.right = true
-    this.title = 'Gatos.js'
+    this.title = 'Gatos'
   }
 }
 </script>
