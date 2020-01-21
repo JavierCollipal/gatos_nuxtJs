@@ -48,7 +48,7 @@ export default {
   axios: {
     /*  */
 
-    baseURL: 'https://portafoliobackend.appspot.com',
+    baseURL: 'https://shielded-escarpment-83113.herokuapp.com',
     headers: {
       'Content-Type': 'application/json'
     }
