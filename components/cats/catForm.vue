@@ -2,27 +2,35 @@
   <ValidationObserver v-slot="{ invalid }">
     <form @submit.prevent="save">
       <v-row>
-        <ValidationProvider v-slot="{ errors }" rules="required">
-          <v-text-field
-            v-model="cat.name"
-            :counter="50"
-            label="Nombre"
-          />
-          <span>{{ errors[0] }}</span>
-        </ValidationProvider>
-
-        <ValidationProvider v-slot="{ errors }" rules="required|age_between:0,20">
-          <v-text-field
-            v-model.number="cat.age"
-            label="Edad"
-          />
-          <span>{{ errors[0] }}</span>
-        </ValidationProvider>
+        <v-col cols="6">
+          <ValidationProvider v-slot="{ errors }" rules="required">
+            <v-text-field
+              v-model="cat.name"
+              :counter="50"
+              label="Nombre"
+            />
+            <span>{{ errors[0] }}</span>
+          </ValidationProvider>
+        </v-col>
+        <v-col cols="6">
+          <ValidationProvider v-slot="{ errors }" rules="required|age_between:0,20">
+            <v-text-field
+              v-model.number="cat.age"
+              label="Edad"
+            />
+            <span>{{ errors[0] }}</span>
+          </ValidationProvider>
+        </v-col>
       </v-row>
+
       <validation-observer>
         <v-row>
-          <BreedSelect />
-          <ColorSelect />
+          <v-col cols="6">
+            <BreedSelect />
+          </v-col>
+          <v-col cols="6">
+            <ColorSelect />
+          </v-col>
         </v-row>
       </validation-observer>
 
