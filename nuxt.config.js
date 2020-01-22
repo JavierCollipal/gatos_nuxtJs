@@ -43,8 +43,7 @@ export default {
    */
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/toast',
-    ['nuxt-i18n']
+    '@nuxtjs/toast'
   ],
   axios: {
     /*  */

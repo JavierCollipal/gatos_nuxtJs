@@ -57,7 +57,7 @@ export default class Default extends Vue {
   constructor () {
     super()
     this.clipped = false
-    this.drawer = true
+    this.drawer = false
     this.fixed = false
     this.items = [
       {
