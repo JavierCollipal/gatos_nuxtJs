@@ -24,33 +24,33 @@
 
       <template v-slot:item.action="{ item }">
         <v-icon
-          @click="deleteModal = true"
+          @click="openDeleteModal(item)"
         >
           mdi-delete
         </v-icon>
-        <v-dialog v-model="deleteModal" persistent max-width="500px">
-          <v-card>
-            <v-card-title class="headline">¿Estas seguro de borrar este color?</v-card-title>
-            <v-card-actions>
-              <v-spacer />
-              <v-btn text @click="deleteModal = false">
-                Cancelar
-              </v-btn>
-              <v-btn text @click="deleteItem(item)">
-                Borrar
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
       </template>
     </v-data-table>
     <v-dialog v-model="colorForm" persistent max-width="500px">
       <v-card>
         <v-card-text>
-          <v-container>
-            <color-form />
-          </v-container>
+          <color-form />
         </v-card-text>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="deleteModal" persistent max-width="500px">
+      <v-card>
+        <v-card-title class="headline">
+          ¿Estas seguro de borrar este color?
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn text @click="deleteModal = false">
+            Cancelar
+          </v-btn>
+          <v-btn text @click="deleteItem">
+            Borrar
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
@@ -88,6 +88,8 @@ export default class ColorList extends Vue {
 
     deleteModal!: boolean;
 
+    colorForDelete!: ColorInterface
+
     constructor () {
       super()
       this.headers = [
@@ -101,9 +103,14 @@ export default class ColorList extends Vue {
       this.controlForm(true)
     }
 
-    deleteItem (item: ColorInterface) {
+    deleteItem () {
       this.deleteModal = false
-      this.deleteColor(item)
+      this.deleteColor(this.colorForDelete)
+    }
+
+    openDeleteModal (item: ColorInterface) {
+      this.colorForDelete = item
+      this.deleteModal = true
     }
 }
 </script>

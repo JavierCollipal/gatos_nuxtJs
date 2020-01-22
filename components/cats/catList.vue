@@ -28,26 +28,10 @@
           mdi-pencil
         </v-icon>
         <v-icon
-          @click="deleteModal = true"
+          @click="openDeleteModal(item)"
         >
           mdi-delete
         </v-icon>
-        <v-dialog v-model="deleteModal" persistent max-width="500px">
-          <v-card>
-            <v-card-title class="headline">
-              ¿Estas seguro de borrar este gato?
-            </v-card-title>
-            <v-card-actions>
-              <v-spacer />
-              <v-btn text @click="deleteModal = false">
-                Cancelar
-              </v-btn>
-              <v-btn text @click="deleteItem(item)">
-                Borrar
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
       </template>
     </v-data-table>
     <v-dialog v-model="catForm" persistent max-width="500px">
@@ -57,6 +41,22 @@
             <CatForm :cat="cat" :is-update="isUpdate" />
           </v-container>
         </v-card-text>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="deleteModal" persistent max-width="500px">
+      <v-card>
+        <v-card-title class="headline">
+          ¿Estas seguro de borrar este gato?
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn text @click="deleteModal = false">
+            Cancelar
+          </v-btn>
+          <v-btn text @click="deleteItem">
+            Borrar
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
@@ -103,6 +103,8 @@ export default class CatList extends Vue {
 
   deleteModal!: boolean;
 
+  catForDelete!: CatInterface
+
   constructor () {
     super()
     this.editedIndex = -1
@@ -129,9 +131,14 @@ export default class CatList extends Vue {
     this.controlForm(true)
   }
 
-  deleteItem (item: CatInterface) {
+  deleteItem () {
     this.deleteModal = false
-    this.deleteCat(item)
+    this.deleteCat(this.catForDelete)
+  }
+
+  openDeleteModal (item: CatInterface) {
+    this.catForDelete = item
+    this.deleteModal = true
   }
 }
 </script>

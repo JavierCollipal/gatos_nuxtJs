@@ -29,6 +29,7 @@
     "@vue/composition-api": "^0.3.4",
     "axios": "^0.19.1",
     "nuxt": "^2.11.0",
+    "nuxt-i18n": "^6.5.0",
     "nuxt-property-decorator": "^2.5.0",
     "nuxt-validate": "^1.0.1",
     "vee-validate": "^3.2.1",

@@ -24,35 +24,33 @@
 
       <template v-slot:item.action="{ item }">
         <v-icon
-          @click="deleteModal = true"
+          @click="openDeleteModal(item)"
         >
           mdi-delete
         </v-icon>
-        <v-dialog v-model="deleteModal" persistent max-width="500px">
-          <v-card>
-            <v-card-title class="headline">
-              ¿Estas seguro de borrar esta raza?
-            </v-card-title>
-            <v-card-actions>
-              <v-spacer />
-              <v-btn text @click="deleteModal = false">
-                Cancelar
-              </v-btn>
-              <v-btn text @click="deleteItem(item)">
-                Borrar
-              </v-btn>
-            </v-card-actions>
-          </v-card>
-        </v-dialog>
       </template>
     </v-data-table>
     <v-dialog v-model="breedForm" persistent max-width="500px">
       <v-card>
         <v-card-text>
-          <v-container>
-            <BreedForm />
-          </v-container>
+          <BreedForm />
         </v-card-text>
+      </v-card>
+    </v-dialog>
+    <v-dialog v-model="deleteModal" persistent max-width="500px">
+      <v-card>
+        <v-card-title class="headline">
+          ¿Estas seguro de borrar esta raza?
+        </v-card-title>
+        <v-card-actions>
+          <v-spacer />
+          <v-btn text @click="deleteModal = false">
+            Cancelar
+          </v-btn>
+          <v-btn text @click="deleteItem">
+            Borrar
+          </v-btn>
+        </v-card-actions>
       </v-card>
     </v-dialog>
   </div>
@@ -93,26 +91,33 @@ export default class BreedList extends Vue {
 
     deleteModal!: boolean;
 
-    $refs!: {
+    breedForDelete!: BreedInterface
+
+  $refs!: {
       observer: InstanceType<typeof ValidationObserver>;
     };
 
-    constructor () {
-      super()
-      this.headers = [
-        { text: 'Nombre', value: 'name' },
-        { text: 'Acciones', value: 'action', sortable: false }
-      ]
-      this.deleteModal = false
-    }
+  constructor () {
+    super()
+    this.headers = [
+      { text: 'Nombre', value: 'name' },
+      { text: 'Acciones', value: 'action', sortable: false }
+    ]
+    this.deleteModal = false
+  }
 
-    addItem () {
-      this.controlForm(true)
-    }
+  addItem () {
+    this.controlForm(true)
+  }
 
-    deleteItem (item: BreedInterface) {
-      this.deleteModal = false
-      this.deleteBreed(item)
-    }
+  deleteItem () {
+    this.deleteModal = false
+    this.deleteBreed(this.breedForDelete)
+  }
+
+  openDeleteModal (item: BreedInterface) {
+    this.breedForDelete = item
+    this.deleteModal = true
+  }
 }
 </script>

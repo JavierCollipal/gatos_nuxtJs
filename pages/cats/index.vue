@@ -1,7 +1,5 @@
 <template>
-  <div>
-    <cat-list :cats="cats" />
-  </div>
+  <cat-list :cats="cats" />
 </template>
 
 <script lang="ts">
@@ -13,7 +11,7 @@ const namespace: string = 'cats'
 @Component({
   components: { CatList }
 })
-export default class Index extends Vue {
+export default class extends Vue {
   @Getter('getCats', { namespace })
   cats!: CatInterface[]
 }

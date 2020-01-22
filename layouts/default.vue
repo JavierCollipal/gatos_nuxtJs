@@ -57,27 +57,27 @@ export default class Default extends Vue {
   constructor () {
     super()
     this.clipped = false
-    this.drawer = false
+    this.drawer = true
     this.fixed = false
     this.items = [
       {
         icon: 'mdi-apps',
-        title: 'Home',
+        title: 'Inicio',
         to: '/'
       },
       {
         icon: 'mdi-chart-bubble',
-        title: 'gatos',
+        title: 'Gatos publicos',
         to: '/cats'
       },
       {
         icon: 'mdi-chart-bubble',
-        title: 'caracteristicas!',
+        title: ' ¡Añade caracteristicas!',
         to: '/maintainers'
       },
       {
         icon: 'mdi-chart-bubble',
-        title: 'info de la app',
+        title: 'información tecnica',
         to: '/info'
       }
     ]

@@ -24,7 +24,7 @@ const namespace: string = 'cats'
 @Component({
   components: { BreedList, ColorList }
 })
-export default class Index extends Vue {
+export default class extends Vue {
     @Getter('getBreeds', { namespace })
     breeds!: BreedInterface[]
 

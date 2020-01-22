@@ -43,7 +43,8 @@ export default {
    */
   modules: [
     '@nuxtjs/axios',
-    '@nuxtjs/toast'
+    '@nuxtjs/toast',
+    ['nuxt-i18n']
   ],
   axios: {
     /*  */
@@ -55,7 +56,7 @@ export default {
   },
   toast: {
     position: 'top-center',
-    duration: 2000
+    duration: 1000
   },
   /*
    ** vuetify module configuration
@@ -75,11 +76,7 @@ export default {
           error: colors.deepOrange.accent4,
           success: colors.green.accent3
         }
-      },
-      font: {
-        family: 'Roboto'
-      },
-      icons: 'mdi'
+      }
     }
   },
   /*

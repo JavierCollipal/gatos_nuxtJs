@@ -78,7 +78,7 @@ export const actions: ActionTree<RootState, RootState> = {
   async deleteBreed ({ dispatch }, breed: BreedInterface) {
     try {
       const { id } = breed
-      await this.$axios.$delete(breedRoute + id).catch(e => e)
+      await this.$axios.$delete(breedRoute + id)
       this.app.$toast.success('Raza eliminado con exito')
       dispatch('fetchBreeds')
     } catch (e) {
