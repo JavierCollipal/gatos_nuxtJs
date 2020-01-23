@@ -126,7 +126,6 @@ export default class CatList extends Vue {
   }
 
   editItem (item: CatInterface) {
-    console.log(item)
     this.setCat(item)
     this.isUpdate = true
     this.controlForm(true)

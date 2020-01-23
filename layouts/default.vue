@@ -79,6 +79,16 @@ export default class Default extends Vue {
         icon: 'mdi-chart-bubble',
         title: 'información tecnica',
         to: '/info'
+      },
+      {
+        icon: 'mdi-chart-bubble',
+        title: 'Making of',
+        to: '/making'
+      },
+      {
+        icon: 'mdi-chart-bubble',
+        title: 'Changelog',
+        to: '/changelog'
       }
     ]
     this.miniVariant = false
