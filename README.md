@@ -1,4 +1,4 @@
 # gatos_nuxtJs
-Frontend de gatos_rails realizado con el framework nuxt.js.
-Al ser ssr, este front se encuentra arriba de manera serverless mediante google app engine.
-https://portafoliofrontend.appspot.com/
+Version actual: operaciones CRUD con Vuex y la api en rails.
+
+Proxima version: JWT entregado por rails y su implementación en gatos_nuxt.
