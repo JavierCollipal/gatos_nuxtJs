@@ -28,6 +28,8 @@ export const actions: ActionTree<RootState, RootState> = {
 
   async addCat ({ dispatch }, cat: CatInterface) {
     try {
+      delete cat.color
+      delete cat.breed
       await this.$axios.$post(catRoute, cat)
       this.app.$toast.success('Gato creado con exito')
       dispatch('fetchCats')
@@ -128,5 +130,15 @@ export const getters: GetterTree<RootState, RootState> = {
   getBreedNames: state => state.breeds.map(breed => breed.name),
   getColorNames: state => state.colors.map(color => color.name),
   filterBreed: state => (name:string) => state.breeds.find(breed => breed.name === name),
-  filterColor: state => (name:string) => state.colors.find(color => color.name === name)
+  filterColor: state => (name:string) => state.colors.find(color => color.name === name),
+  getColorName: state => (id:number) => {
+    const color = state.colors.find(color => color.id === id)
+    // @ts-ignore
+    return color.name
+  },
+  getBreedName: state => (id:number) => {
+    const breed = state.breeds.find(breed => breed.id === id)
+    // @ts-ignore
+    return breed.name
+  }
 }

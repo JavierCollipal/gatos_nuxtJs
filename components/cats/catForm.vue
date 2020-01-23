@@ -22,17 +22,30 @@
           </ValidationProvider>
         </v-col>
       </v-row>
-
-      <validation-observer>
-        <v-row>
-          <v-col cols="6">
-            <BreedSelect :reset="resetSelects" />
-          </v-col>
-          <v-col cols="6">
-            <ColorSelect :reset="resetSelects" />
-          </v-col>
-        </v-row>
-      </validation-observer>
+      <v-row>
+        <v-col cols="6">
+          <ValidationProvider v-slot="{ errors }" rules="required">
+            <v-select
+              v-model="cat.breed.name"
+              :items="breedNames"
+              label="Razas"
+              @input="onBreedSelect"
+            />
+            <span>{{ errors[0] }}</span>
+          </ValidationProvider>
+        </v-col>
+        <v-col cols="6">
+          <ValidationProvider v-slot="{ errors }" rules="required">
+            <v-select
+              v-model="cat.color.name"
+              :items="colorNames"
+              label="Colores"
+              @change="onColorSelect"
+            />
+            <span>{{ errors[0] }}</span>
+          </ValidationProvider>
+        </v-col>
+      </v-row>
 
       <v-row>
         <v-btn class="mr-4" @click="close">
@@ -51,17 +64,13 @@
 import { Action, Component, Getter, Mutation, Prop, Vue } from 'nuxt-property-decorator'
 import { ValidationProvider, ValidationObserver } from 'vee-validate'
 import { CatInterface } from '~/interfaces/cat.interface'
-import BreedSelect from '~/components/properties/breed/breedSelect.vue'
-import ColorSelect from '~/components/properties/color/colorSelect.vue'
 
 const namespace: string = 'cats'
 
 @Component({
   components: {
     ValidationProvider,
-    ValidationObserver,
-    BreedSelect,
-    ColorSelect
+    ValidationObserver
   }
 })
 export default class CatForm extends Vue {
@@ -83,31 +92,57 @@ export default class CatForm extends Vue {
   @Getter('getCat', { namespace })
   getCat!: Function;
 
+  @Getter('getColorName', { namespace })
+  getColorName!: Function;
+
+  @Getter('getBreedName', { namespace })
+  getBreedName!: Function;
+
+  @Action('fetchBreeds', { namespace })
+  fetchBreeds!: Function
+
+  @Action('fetchColors', { namespace })
+  fetchColors!: Function
+
+  @Getter('filterColor', { namespace })
+  filterColor!: Function
+
+  @Getter('filterBreed', { namespace })
+  filterBreed!: Function
+
+  @Mutation('SET_COLOR', { namespace })
+  setColor!: Function
+
+  @Mutation('SET_BREED', { namespace })
+  setBreed!: Function
+
+  breedName: string;
+
+  colorName: string;
+
   formTitle: string;
-  resetSelects!: boolean;
+
+  @Getter('getBreedNames', { namespace })
+  breedNames!: string[]
+
+  @Getter('getColorNames', { namespace })
+  colorNames!: string[]
 
   constructor () {
     super()
     this.formTitle = 'gatos'
-    this.resetSelects = false
+    this.breedName = ''
+    this.colorName = ''
   }
 
-  resetSelectValues () : Promise<any> {
-    return new Promise((resolve) => {
-      this.resetSelects = true
-      this.controlForm(false)
-      resolve()
-    })
+  resetSelectValues () {
+    this.breedName = ''
+    this.colorName = ''
   }
 
   close () {
-    this.resetSelectValues().then(() => {
-      this.resetSelects = false
-    })
-  }
-
-  test () {
-    this.resetSelects = false
+    this.controlForm(false)
+    this.resetSelectValues()
   }
 
   save () {
@@ -119,6 +154,16 @@ export default class CatForm extends Vue {
       this.addCat(cat).then(() => {})
     }
     this.close()
+  }
+
+  onColorSelect () {
+    const { id } = this.filterColor(this.cat.color.name)
+    this.setColor(id)
+  }
+
+  onBreedSelect () {
+    const { id } = this.filterBreed(this.cat.breed.name)
+    this.setBreed(id)
   }
 }
 </script>
