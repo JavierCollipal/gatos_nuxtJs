@@ -27,7 +27,7 @@
     "@nuxtjs/toast": "^3.3.0",
     "@nuxtjs/vuetify": "^1.0.0",
     "@vue/composition-api": "^0.3.4",
-    "axios": "^0.19.1",
+    "axios": "^0.21.1",
     "nuxt": "^2.11.0",
     "nuxt-i18n": "^6.5.0",
     "nuxt-property-decorator": "^2.5.0",
